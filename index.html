@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PhishGuard - Detector de Phishing</title>
+
+    <link rel="stylesheet" href="./stales.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div class="logo">
+            🛡️
+            <div>
+                <strong>PhishGuard</strong>
+                <small>Detector de URLs suspeitas</small>
+            </div>
+        </div>
+
+        <span class="status">
+            Análise local • sem abrir o site
+        </span>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="hero">
+
+            <div>
+
+                <span class="eyebrow">
+                    SEGURANÇA DIGITAL
+                </span>
+
+                <h1>
+                    Analise um link antes de confiar nele.
+                </h1>
+
+                <p>
+                    O PhishGuard analisa características estruturais
+                    de uma URL e calcula uma pontuação de risco.
+                </p>
+
+            </div>
+
+            <div class="shield">
+                🛡️
+            </div>
+
+        </section>
+
+
+        <!-- ÁREA DE ANÁLISE -->
+
+        <section class="card">
+
+            <div class="section-header">
+
+                <div>
+                    <span class="section-title">
+                        ANÁLISE
+                    </span>
+
+                    <h2>
+                        Verifique uma URL
+                    </h2>
+                </div>
+
+                <button id="limpar" class="btn-secondary">
+                    Limpar
+                </button>
+
+            </div>
+
+
+            <form id="formulario">
+
+                <label for="url">
+                    Cole o endereço que deseja verificar
+                </label>
+
+                <div class="input-area">
+
+                    <input
+                        type="text"
+                        id="url"
+                        placeholder="https://exemplo.com/login"
+                        autocomplete="off"
+                    >
+
+                    <button type="submit" class="btn-primary">
+                        🔎 Analisar link
+                    </button>
+
+                </div>
+
+                <p class="help">
+                    Exemplo:
+                    https://exemplo.com/validar-conta
+                </p>
+
+                <p id="erro" class="erro"></p>
+
+            </form>
+
+
+            <div class="testes">
+
+                <span>Testes rápidos:</span>
+
+                <button
+                    class="teste"
+                    data-url="https://www.google.com"
+                >
+                    URL legítima
+                </button>
+
+                <button
+                    class="teste"
+                    data-url="http://192.168.0.10/login/password"
+                >
+                    IP + HTTP
+                </button>
+
+                <button
+                    class="teste"
+                    data-url="http://login-conta-segura.exemplo.com/verify/account?password=true"
+                >
+                    Estrutura suspeita
+                </button>
+
+            </div>
+
+        </section>
+
+
+<section id="resultado" class="resultado escondido">
+
+    <!-- CABEÇALHO DO RESULTADO -->
+
+    <div id="resultadoTopo" class="resultado-topo">
+
+        <div id="iconeRisco" class="icone-risco">
+            🛡️
+        </div>
+
+        <div class="resultado-texto">
+
+            <span id="nivel" class="nivel">
+                RISCO BAIXO
+            </span>
+
+            <h2 id="tituloRisco">
+                URL aparentemente segura
+            </h2>
+
+            <p id="resumo">
+                A análise foi concluída.
+            </p>
+
+        </div>
+
+        <div class="score">
+
+            <strong id="pontuacao">
+                0
+            </strong>
+
+            <span>
+                /100
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- BARRA DE RISCO -->
+
+    <div class="barra-risco">
+
+        <div class="barra-labels">
+
+            <span>
+                BAIXO
+            </span>
+
+            <span>
+                MÉDIO
+            </span>
+
+            <span>
+                ALTO
+            </span>
+
+        </div>
+
+        <div class="barra">
+
+            <div id="barraProgresso"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MENSAGEM PRINCIPAL -->
+
+    <div id="mensagemSeguranca" class="mensagem-seguranca">
+
+        <div class="mensagem-icone">
+            🛡️
+        </div>
+
+        <div>
+
+            <strong>
+                Resultado da análise
+            </strong>
+
+            <p id="mensagemResultado">
+
+                A análise estrutural da URL foi concluída.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- GRID -->
+
+    <div class="grid-resultados">
+
+
+        <!-- INDICADORES -->
+
+        <div class="painel">
+
+            <div class="painel-titulo">
+
+                <span>
+                    🔍
+                </span>
+
+                <div>
+
+                    <h3>
+                        Indicadores encontrados
+                    </h3>
+
+                    <p>
+                        Ameaças encontradas na análise
+                    </p>
+                </div>
+
+            </div>
+
+            <div id="indicadores"></div>
+
+        </div>
+
+
+        <!-- RECOMENDAÇÃO -->
+
+        <div class="painel">
+
+            <div class="painel-titulo">
+
+                <span>
+                    💡
+                </span>
+
+                <div>
+
+                    <h3>
+                        Recomendação
+                    </h3>
+
+                    <p>
+                        O que fazer depois da análise
+                    </p>
+
+                </div>
+
+            </div>
+
+            <p id="recomendacao"></p>
+
+            <div class="aviso">
+
+                <strong>Importante:</strong>
+
+                o resultado é uma análise heurística.
+                Nenhum indicador isolado comprova que
+                uma URL é phishing.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CARACTERÍSTICAS -->
+
+    <div class="painel caracteristicas">
+
+        <div class="painel-titulo">
+
+            <span>
+                🧩
+            </span>
+
+            <div>
+
+                <h3>
+                    Características da URL
+                </h3>
+
+                <p>
+                    Informações extraídas durante a análise
+                </p>
+
+            </div>
+
+        </div>
+
+        <div id="detalhes" class="detalhes"></div>
+
+    </div>
+
+
+</section>
+
+
+        <!-- INFORMAÇÕES -->
+    <section class="info-grid">
+
+      <a href="aprenda.html" class="info-card link-card">
+
+        <div class="info-icon">
+            📚
+        </div>
+
+        <h3>
+            O que é Phishing?
+        </h3>
+
+        <p>
+            Aprenda o que é phishing, como esse tipo de
+            golpe funciona e quais sinais podem ajudar
+            a identificar uma tentativa de fraude.
+        </p>
+
+        <span class="saiba-mais">
+            Saiba mais →
+        </span>
+
+    </a>
+
+
+    <a href="aprenda.html#como-funciona"
+       class="info-card link-card">
+
+        <div class="info-icon">
+            🧠
+        </div>
+
+        <h3>
+            Como os ataques funcionam?
+        </h3>
+
+        <p>
+            Entenda, de forma educativa, como criminosos
+            tentam induzir usuários ao erro e quais etapas
+            normalmente aparecem nesses golpes.
+        </p>
+
+        <span class="saiba-mais">
+            Aprender →
+        </span>
+
+    </a>
+
+
+    <a href="aprenda.html#prevencao"
+       class="info-card link-card">
+
+        <div class="info-icon">
+            🛡️
+        </div>
+
+        <h3>
+            Aprenda a se proteger
+        </h3>
+
+        <p>
+            Conheça boas práticas para reconhecer links
+            suspeitos, proteger suas contas e evitar o
+            compartilhamento de informações sensíveis.
+        </p>
+
+        <span class="saiba-mais">
+            Ver dicas →
+        </span>
+
+    </a>
+
+</section>
+        <!-- HISTÓRICO -->
+
+        <section class="card historico">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-title">
+                        HISTÓRICO
+                    </span>
+
+                    <h2>
+                        Últimas análises
+                    </h2>
+
+                </div>
+
+                <button
+                    id="limparHistorico"
+                    class="btn-secondary"
+                >
+                    Apagar histórico
+                </button>
+
+            </div>
+
+
+            <div id="historicoLista">
+
+                <div class="vazio">
+                    Nenhuma análise realizada ainda.
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <strong>PhishGuard</strong>
+        — Protótipo educacional para PCC.
+
+        <br>
+
+        Sistema baseado em análise heurística de URLs.
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
